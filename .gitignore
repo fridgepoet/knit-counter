@@ -1,2 +1,6 @@
 /.idea/
 knit-counter.iml
+dist/*
+.vscode
+.clang-format
+.editorconfig
