@@ -2,16 +2,16 @@
 
 App(
     appid="knit_counter",  # Must be unique
-    name="App knit_counter",  # Displayed in menus
+    name="Knit Counter",  # Displayed in menus
     apptype=FlipperAppType.EXTERNAL,
     entry_point="knit_counter_app",
     stack_size=2 * 1024,
-    fap_category="Examples",
+    fap_category="Tools",
     # Optional values
     # fap_version="0.1",
     fap_icon="knit_counter.png",  # 10x10 1-bit PNG
-    # fap_description="A simple app",
-    # fap_author="J. Doe",
-    # fap_weburl="https://github.com/user/knit_counter",
+    # fap_description="Knitting row counter",
+    # fap_author="Shirley Fridgepoet",
+    # fap_weburl="https://github.com/fridgepoet/knit_counter",
     fap_icon_assets="images",  # Image assets to compile for this application
 )
