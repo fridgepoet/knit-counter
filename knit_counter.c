@@ -18,7 +18,7 @@ static void input_callback(InputEvent* input_event, void* ctx) {
 static void render_callback(Canvas* canvas, void* ctx) {
     UNUSED(ctx);
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str_aligned(canvas, 15, 30, AlignLeft, AlignTop, "HELLO WORLD!");
+    canvas_draw_str_aligned(canvas, 30, 30, AlignCenter, AlignCenter, "Fluffles!");
 }
 int32_t knit_counter_app(void* p) {
     UNUSED(p);
