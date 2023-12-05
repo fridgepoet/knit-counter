@@ -1,7 +1,7 @@
+.DS_Store
 /.idea/
 knit-counter.iml
 dist/*
 .vscode
 .clang-format
 .editorconfig
-manifest.yml
