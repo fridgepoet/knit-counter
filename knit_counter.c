@@ -99,8 +99,13 @@ void fluffy_save(uint32_t count) {
     flipper_format_free(fff_format);
 }
 
+uint32_t fluffy_read() {
+    return 5;
+}
+
 int32_t knit_counter_app(void) {
     Counter* c = state_init();
+    c->count = fluffy_read();
 
     while(1) {
         InputEvent input;
@@ -125,7 +130,7 @@ int32_t knit_counter_app(void) {
         }
     }
 
-    fluffy_save(33);
+    fluffy_save(c->count);
     state_free(c);
     return 0;
 }
