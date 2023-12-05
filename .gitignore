@@ -4,3 +4,4 @@ dist/*
 .vscode
 .clang-format
 .editorconfig
+manifest.yml
