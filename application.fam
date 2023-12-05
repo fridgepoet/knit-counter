@@ -13,5 +13,5 @@ App(
     fap_description="Knit row counter",
     fap_author="@fridgepoet",
     fap_weburl="https://github.com/fridgepoet/knit_counter",
-    # fap_icon_assets="images",  # Image assets to compile for this application
+    fap_icon_assets="images",  # Image assets to compile for this application
 )
