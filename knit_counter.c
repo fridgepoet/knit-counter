@@ -48,7 +48,7 @@ static void render_callback(Canvas* canvas, void* ctx) {
     canvas_clear(canvas);
     canvas_set_color(canvas, ColorBlack);
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str_aligned(canvas, 64, 10, AlignCenter, AlignCenter, "Counter :)");
+    canvas_draw_str_aligned(canvas, 64, 10, AlignCenter, AlignCenter, "Counter");
     canvas_set_font(canvas, FontBigNumbers);
 
     char scount[5];
@@ -82,30 +82,42 @@ Counter* state_init() {
     return c;
 }
 
-void fluffy_save(uint32_t count) {
+void save_count(uint32_t count) {
     Storage* storage = furi_record_open(RECORD_STORAGE);
 
     FlipperFormat* fff_format = flipper_format_file_alloc(storage);
 
     do {
-        const uint32_t version = 1;
-        const uint32_t uint32_value = 1234;
+        if(storage_file_exists(storage, EXT_PATH("counter_storage"))) {
+            storage_simply_remove(storage, EXT_PATH("counter_storage"));
+        }
 
         if(!flipper_format_file_open_new(fff_format, EXT_PATH("counter_storage"))) break;
-        if(!flipper_format_write_header_cstr(fff_format, "Storage for counter", version)) break;
-        if(!flipper_format_write_uint32(fff_format, "UINT", &uint32_value, count)) break;
+        if(!flipper_format_write_uint32(fff_format, "UINT", &count, 1)) break;
     } while(0);
 
     flipper_format_free(fff_format);
 }
 
-uint32_t fluffy_read() {
-    return 5;
+uint32_t read_count() {
+    Storage* storage = furi_record_open(RECORD_STORAGE);
+    FlipperFormat* file = flipper_format_file_alloc(storage);
+
+    uint32_t uint32_value = 0;
+
+    do {
+        if(!flipper_format_file_open_existing(file, EXT_PATH("counter_storage"))) break;
+        if(!flipper_format_read_uint32(file, "UINT", &uint32_value, 1)) break;
+    } while(0);
+
+    flipper_format_free(file);
+
+    return uint32_value;
 }
 
 int32_t knit_counter_app(void) {
     Counter* c = state_init();
-    c->count = fluffy_read();
+    c->count = read_count();
 
     while(1) {
         InputEvent input;
@@ -113,6 +125,7 @@ int32_t knit_counter_app(void) {
             furi_check(furi_mutex_acquire(c->mutex, FuriWaitForever) == FuriStatusOk);
 
             if(input.key == InputKeyBack) {
+                save_count(c->count);
                 furi_mutex_release(c->mutex);
                 state_free(c);
                 return 0;
@@ -130,7 +143,7 @@ int32_t knit_counter_app(void) {
         }
     }
 
-    fluffy_save(c->count);
+    save_count(c->count);
     state_free(c);
     return 0;
 }
