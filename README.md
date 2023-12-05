@@ -1,6 +1,6 @@
 # Knit Counter
 
-A [knit counter](https://en.wikipedia.org/wiki/Row_counter_(hand_knitting))https://en.wikipedia.org/wiki/Row_counter_(hand_knitting) is a tally counter for counting pattern repetitions in a stitch pattern, typically rows.
+A [knit counter](https://en.wikipedia.org/wiki/Row_counter_(hand_knitting)) is a tally counter for counting pattern repetitions in a stitch pattern, typically rows.
 
 A knit counter must save the progress of the count even after exiting, so the feature of this counter is persisting the count!
 
