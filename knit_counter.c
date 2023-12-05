@@ -5,6 +5,8 @@
 
 #include <input/input.h>
 #include <stdlib.h>
+#include <storage/storage.h>
+#include <flipper_format/flipper_format_i.h>
 
 #define MAX_COUNT 99
 #define BOXTIME 2
@@ -80,6 +82,23 @@ Counter* state_init() {
     return c;
 }
 
+void fluffy_save(uint32_t count) {
+    Storage* storage = furi_record_open(RECORD_STORAGE);
+
+    FlipperFormat* fff_format = flipper_format_file_alloc(storage);
+
+    do {
+        const uint32_t version = 1;
+        const uint32_t uint32_value = 1234;
+
+        if(!flipper_format_file_open_new(fff_format, EXT_PATH("counter_storage"))) break;
+        if(!flipper_format_write_header_cstr(fff_format, "Storage for counter", version)) break;
+        if(!flipper_format_write_uint32(fff_format, "UINT", &uint32_value, count)) break;
+    } while(0);
+
+    flipper_format_free(fff_format);
+}
+
 int32_t knit_counter_app(void) {
     Counter* c = state_init();
 
@@ -105,6 +124,8 @@ int32_t knit_counter_app(void) {
             view_port_update(c->view_port);
         }
     }
+
+    fluffy_save(33);
     state_free(c);
     return 0;
 }
