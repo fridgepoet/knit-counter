@@ -18,7 +18,7 @@ typedef struct {
     FuriMessageQueue* input_queue;
     ViewPort* view_port;
     Gui* gui;
-    FuriMutex** mutex;
+    FuriMutex* mutex;
 
     int count;
     bool pressed;
